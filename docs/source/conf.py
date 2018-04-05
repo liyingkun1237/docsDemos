@@ -191,3 +191,9 @@ epub_exclude_files = ['search.html']
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'https://docs.python.org/': None}
+
+
+# 抄至 https://github.com/AxeldeRomblay/MLBox/blob/master/docs/conf.py
+# The name of an image file (relative to this directory) to place at the
+# top of the sidebar.
+html_logo = "logos/logo.png"
