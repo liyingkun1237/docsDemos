@@ -1,0 +1,486 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>CcxgetaddrTools package &mdash; Ccxgetaddr latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Ccxgetaddr latest documentation" href="index.html"/>
+        <link rel="next" title="setup module" href="setup.html"/>
+        <link rel="prev" title="Welcome to Ccxgetaddr’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Ccxgetaddr
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CcxgetaddrTools package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-CcxgetaddrTools.getaddr">CcxgetaddrTools.getaddr module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-CcxgetaddrTools">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ccxgetaddr</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>CcxgetaddrTools package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/CcxgetaddrTools.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ccxgetaddrtools-package">
+<h1>CcxgetaddrTools package<a class="headerlink" href="#ccxgetaddrtools-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-CcxgetaddrTools.getaddr">
+<span id="ccxgetaddrtools-getaddr-module"></span><h2>CcxgetaddrTools.getaddr module<a class="headerlink" href="#module-CcxgetaddrTools.getaddr" title="Permalink to this headline">¶</a></h2>
+<p>依据身份证和手机号，获取常用的地址变量信息</p>
+<p>获取区划代码的国家统计局地址：<a class="reference external" href="http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/">http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/</a></p>
+<p>作者：liyingkun</p>
+<p>时间：2018-04-04</p>
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_Get_idno_Info">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_Get_idno_Info</code><span class="sig-paren">(</span><em>idno</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_Get_idno_Info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_Get_idno_Info" title="Permalink to this definition">¶</a></dt>
+<dd><p>批量获取出身份证相关的信息</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>idno</strong> &#8211; str 由身份证号构成的series或含有idno列的dataframe</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">DataFrame (origin + age + gender +  idno_prov + idno_city + idno_prov_lvl + idno_city_lvl)</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># read data and named `df`</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dd</span> <span class="o">=</span> <span class="n">f_Get_idno_Info</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_Get_mobile_Info">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_Get_mobile_Info</code><span class="sig-paren">(</span><em>mobile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_Get_mobile_Info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_Get_mobile_Info" title="Permalink to this definition">¶</a></dt>
+<dd><p>批量获取出mobile相关的信息</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mobile</strong> &#8211; 由电话号码构成的series或含有`mobile`为列名的dataframe</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">DataFrame (orign + &#8216;MobileType&#8217;, &#8216;MobileCity&#8217;, &#8216;MobileProv&#8217;, &#8216;mobile_city_lvl&#8217;, &#8216;mobile_prov_lvl&#8217; )</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># read data and named `df`</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f_Get_mobile_Info</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_age">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_age</code><span class="sig-paren">(</span><em>idno</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_age"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_age" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_cid_city_lvl">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_cid_city_lvl</code><span class="sig-paren">(</span><em>id_city</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_cid_city_lvl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_cid_city_lvl" title="Permalink to this definition">¶</a></dt>
+<dd><p>身份证地址信息 获取城市，并归约为对应的城市等级</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_city</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_cid_prov_lvl">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_cid_prov_lvl</code><span class="sig-paren">(</span><em>idno_prov</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_cid_prov_lvl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_cid_prov_lvl" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取身份证的省份等级</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_card_address</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_dict_city_level">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_dict_city_level</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_dict_city_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_dict_city_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取对应的城市等级</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pattern_1</span> <span class="o">=</span> <span class="s1">&#39;北京|上海|广州|深圳|天津&#39;</span>  <span class="c1"># 一线</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pattern_2</span> <span class="o">=</span> <span class="s1">&#39;杭州|南京|济南|重庆|青岛|大连|宁波|厦门&#39;</span>  <span class="c1"># 二线发达</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pattern_3</span> <span class="o">=</span> <span class="s1">&#39;成都|武汉|哈尔滨|沈阳|西安|长春|长沙|福州|郑州|石家庄|苏州|佛山|东莞|无锡|烟台|太原&#39;</span>  <span class="c1"># 二线中等发达</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pattern_4</span> <span class="o">=</span> <span class="s1">&#39;合肥|南昌|南宁|昆明|温州|淄博|唐山&#39;</span>  <span class="c1"># 二线发展较弱</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> &#8211; str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int [1,2,3,4,5,6] {1:一线,2:二线发达,3:二线中等发达,4:二线发展较弱,5:三线及三线以下,6:未知}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_dict_prov_level">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_dict_prov_level</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_dict_prov_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_dict_prov_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取省所对应的等级 修改对应的pattern 即可映射不同的城市等级</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pattern_1</span> <span class="o">=</span> <span class="s1">&#39;上海|北京|天津|广东|澳门|香港&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pattern_2</span> <span class="o">=</span> <span class="s1">&#39;江苏|山东|福建|浙江|安徽&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pattern_3</span> <span class="o">=</span> <span class="s1">&#39;湖北|湖南|河南|河北|江西|山西|陕西&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pattern_4</span> <span class="o">=</span> <span class="s1">&#39;广西|海南|云南|四川|贵州|重庆&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pattern_5</span> <span class="o">=</span> <span class="s1">&#39;黑龙江|吉林|辽宁|内蒙古|甘肃|新疆|青海|宁夏|西藏&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> &#8211; str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int [1,2,3,4,5,6] 其中6为未能匹配到城市等级</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_gender">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_gender</code><span class="sig-paren">(</span><em>idno</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_gender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_gender" title="Permalink to this definition">¶</a></dt>
+<dd><p>依据身份证计算出性别 1：男  0：女</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>idno</strong> &#8211; str 15或18位</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_get_mobile_city">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_get_mobile_city</code><span class="sig-paren">(</span><em>mobile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_get_mobile_city"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_get_mobile_city" title="Permalink to this definition">¶</a></dt>
+<dd><p>单次查询 依据手机号匹配出对应的归属地城市</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mobile</strong> &#8211; str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_get_mobile_prov">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_get_mobile_prov</code><span class="sig-paren">(</span><em>mobile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_get_mobile_prov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_get_mobile_prov" title="Permalink to this definition">¶</a></dt>
+<dd><p>单次查询 依据手机号查询出对应的归属地省</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mobile</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_get_mobile_type">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_get_mobile_type</code><span class="sig-paren">(</span><em>mobile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_get_mobile_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_get_mobile_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>单次查询 运营商类型</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mobile</strong> &#8211; str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int 1：移动  ； 2：联通 ；  3 ：电信</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_mobile_city_lvl">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_mobile_city_lvl</code><span class="sig-paren">(</span><em>mobile_city</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_mobile_city_lvl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_mobile_city_lvl" title="Permalink to this definition">¶</a></dt>
+<dd><p>手机号归属地 获取城市，并归约为对应的城市等级
+:param mobile_city:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_mobile_prov_lvl">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_mobile_prov_lvl</code><span class="sig-paren">(</span><em>mobile_province</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_mobile_prov_lvl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_mobile_prov_lvl" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取手机号归属地的省份等级</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mobile_province</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.f_mobiletype_clean">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">f_mobiletype_clean</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#f_mobiletype_clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.f_mobiletype_clean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.get_idno_city">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">get_idno_city</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#get_idno_city"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.get_idno_city" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.get_idno_prov">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">get_idno_prov</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#get_idno_prov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.get_idno_prov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="CcxgetaddrTools.getaddr.get_mobile_7">
+<code class="descclassname">CcxgetaddrTools.getaddr.</code><code class="descname">get_mobile_7</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/CcxgetaddrTools/getaddr.html#get_mobile_7"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#CcxgetaddrTools.getaddr.get_mobile_7" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-CcxgetaddrTools">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-CcxgetaddrTools" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="setup.html" class="btn btn-neutral float-right" title="setup module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to Ccxgetaddr’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, liyingkun.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'latest',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

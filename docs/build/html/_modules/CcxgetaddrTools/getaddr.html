@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>CcxgetaddrTools.getaddr &mdash; Ccxgetaddr latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Ccxgetaddr latest documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Ccxgetaddr
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CcxgetaddrTools.html">CcxgetaddrTools package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Ccxgetaddr</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>CcxgetaddrTools.getaddr</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for CcxgetaddrTools.getaddr</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">依据身份证和手机号，获取常用的地址变量信息</span>
+
+<span class="sd">获取区划代码的国家统计局地址：http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/</span>
+
+<span class="sd">作者：liyingkun</span>
+
+<span class="sd">时间：2018-04-04</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="n">pkg_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">dict_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg_path</span><span class="p">,</span> <span class="s1">&#39;addr_dict&#39;</span><span class="p">)</span>
+<span class="c1"># idno_path = r&#39;C:\Users\liyin\Desktop\RTHX\Ccxgetaddr-0.1.0\CcxgetaddrTools\addr_dict\idno_dict.pkl&#39;</span>
+<span class="c1"># mobile_path = r&#39;C:\Users\Administrator\Desktop\share_datamodel\lyk\RTHX\mobile_addr_dict.pkl&#39;</span>
+
+<span class="n">idno_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dict_path</span><span class="p">,</span> <span class="s1">&#39;idno_dict_0404.pkl&#39;</span><span class="p">)</span>  <span class="c1"># 0404更新</span>
+<span class="n">mobile_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dict_path</span><span class="p">,</span> <span class="s1">&#39;mobile_addr_dict.pkl&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">idno_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">idno_province</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">idno_city</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">mobile_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">mobile_addr</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>  <span class="c1"># 0.19的pandas版本的</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">mobile_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dict_path</span><span class="p">,</span> <span class="s1">&#39;mobile_addr_dict_0404.pkl&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">mobile_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">mobile_addr</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>  <span class="c1"># 0.20的pandas版本的</span>
+
+
+<span class="c1"># 1.依据身份证，获取地址信息</span>
+<div class="viewcode-block" id="get_idno_prov"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.get_idno_prov">[docs]</a><span class="k">def</span> <span class="nf">get_idno_prov</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">idno_province</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()[:</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+
+
+<div class="viewcode-block" id="get_idno_city"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.get_idno_city">[docs]</a><span class="k">def</span> <span class="nf">get_idno_city</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">idno_city</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()[:</span><span class="mi">4</span><span class="p">]]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+
+
+<div class="viewcode-block" id="f_age"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_age">[docs]</a><span class="k">def</span> <span class="nf">f_age</span><span class="p">(</span><span class="n">idno</span><span class="p">):</span>
+    <span class="n">present_year</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">present_year</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">idno</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+
+
+<div class="viewcode-block" id="f_gender"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_gender">[docs]</a><span class="k">def</span> <span class="nf">f_gender</span><span class="p">(</span><span class="n">idno</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    依据身份证计算出性别 1：男  0：女</span>
+
+<span class="sd">    :param idno: str 15或18位</span>
+<span class="sd">    :return: int</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">idno</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">%</span> <span class="mi">2</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+
+
+<div class="viewcode-block" id="f_dict_prov_level"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_dict_prov_level">[docs]</a><span class="k">def</span> <span class="nf">f_dict_prov_level</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    获取省所对应的等级 修改对应的pattern 即可映射不同的城市等级</span>
+
+<span class="sd">    &gt;&gt;&gt; pattern_1 = &#39;上海|北京|天津|广东|澳门|香港&#39;</span>
+<span class="sd">    &gt;&gt;&gt; pattern_2 = &#39;江苏|山东|福建|浙江|安徽&#39;</span>
+<span class="sd">    &gt;&gt;&gt; pattern_3 = &#39;湖北|湖南|河南|河北|江西|山西|陕西&#39;</span>
+<span class="sd">    &gt;&gt;&gt; pattern_4 = &#39;广西|海南|云南|四川|贵州|重庆&#39;</span>
+<span class="sd">    &gt;&gt;&gt; pattern_5 = &#39;黑龙江|吉林|辽宁|内蒙古|甘肃|新疆|青海|宁夏|西藏&#39;</span>
+
+<span class="sd">    :param x: str</span>
+<span class="sd">    :return: int [1,2,3,4,5,6] 其中6为未能匹配到城市等级</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">pattern_1</span> <span class="o">=</span> <span class="s1">&#39;上海|北京|天津|广东|澳门|香港&#39;</span>
+    <span class="n">pattern_2</span> <span class="o">=</span> <span class="s1">&#39;江苏|山东|福建|浙江|安徽&#39;</span>
+    <span class="n">pattern_3</span> <span class="o">=</span> <span class="s1">&#39;湖北|湖南|河南|河北|江西|山西|陕西&#39;</span>
+    <span class="n">pattern_4</span> <span class="o">=</span> <span class="s1">&#39;广西|海南|云南|四川|贵州|重庆&#39;</span>
+    <span class="n">pattern_5</span> <span class="o">=</span> <span class="s1">&#39;黑龙江|吉林|辽宁|内蒙古|甘肃|新疆|青海|宁夏|西藏&#39;</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern_1</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern_2</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">2</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern_3</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">3</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern_4</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">4</span>
+    <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern_5</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">5</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">6</span></div>
+
+
+<div class="viewcode-block" id="f_cid_prov_lvl"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_cid_prov_lvl">[docs]</a><span class="k">def</span> <span class="nf">f_cid_prov_lvl</span><span class="p">(</span><span class="n">idno_prov</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    获取身份证的省份等级</span>
+
+<span class="sd">    :param id_card_address:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">f_dict_prov_level</span><span class="p">(</span><span class="n">idno_prov</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="f_mobile_prov_lvl"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_mobile_prov_lvl">[docs]</a><span class="k">def</span> <span class="nf">f_mobile_prov_lvl</span><span class="p">(</span><span class="n">mobile_province</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    获取手机号归属地的省份等级</span>
+
+<span class="sd">    :param mobile_province:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">f_dict_prov_level</span><span class="p">(</span><span class="n">mobile_province</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="f_dict_city_level"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_dict_city_level">[docs]</a><span class="k">def</span> <span class="nf">f_dict_city_level</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    获取对应的城市等级</span>
+
+<span class="sd">    &gt;&gt;&gt; pattern_1 = &#39;北京|上海|广州|深圳|天津&#39;  # 一线</span>
+<span class="sd">    &gt;&gt;&gt; pattern_2 = &#39;杭州|南京|济南|重庆|青岛|大连|宁波|厦门&#39;  # 二线发达</span>
+<span class="sd">    &gt;&gt;&gt; pattern_3 = &#39;成都|武汉|哈尔滨|沈阳|西安|长春|长沙|福州|郑州|石家庄|苏州|佛山|东莞|无锡|烟台|太原&#39;  # 二线中等发达</span>
+<span class="sd">    &gt;&gt;&gt; pattern_4 = &#39;合肥|南昌|南宁|昆明|温州|淄博|唐山&#39;  # 二线发展较弱</span>
+
+
+<span class="sd">    :param x: str</span>
+<span class="sd">    :return: int [1,2,3,4,5,6] {1:一线,2:二线发达,3:二线中等发达,4:二线发展较弱,5:三线及三线以下,6:未知}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern_1</span> <span class="o">=</span> <span class="s1">&#39;北京|上海|广州|深圳|天津&#39;</span>  <span class="c1"># 一线</span>
+    <span class="n">pattern_2</span> <span class="o">=</span> <span class="s1">&#39;杭州|南京|济南|重庆|青岛|大连|宁波|厦门&#39;</span>  <span class="c1"># 二线发达</span>
+    <span class="n">pattern_3</span> <span class="o">=</span> <span class="s1">&#39;成都|武汉|哈尔滨|沈阳|西安|长春|长沙|福州|郑州|石家庄|苏州|佛山|东莞|无锡|烟台|太原&#39;</span>  <span class="c1"># 二线中等发达</span>
+    <span class="n">pattern_4</span> <span class="o">=</span> <span class="s1">&#39;合肥|南昌|南宁|昆明|温州|淄博|唐山&#39;</span>  <span class="c1"># 二线发展较弱</span>
+
+    <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern_1</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern_2</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern_3</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">3</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern_4</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">4</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">5</span>  <span class="c1"># 三线以下城市</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">6</span>  <span class="c1"># 缺失</span></div>
+
+
+<div class="viewcode-block" id="f_cid_city_lvl"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_cid_city_lvl">[docs]</a><span class="k">def</span> <span class="nf">f_cid_city_lvl</span><span class="p">(</span><span class="n">id_city</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    身份证地址信息 获取城市，并归约为对应的城市等级</span>
+
+<span class="sd">    :param id_city:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">f_dict_city_level</span><span class="p">(</span><span class="n">id_city</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="f_mobile_city_lvl"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_mobile_city_lvl">[docs]</a><span class="k">def</span> <span class="nf">f_mobile_city_lvl</span><span class="p">(</span><span class="n">mobile_city</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    手机号归属地 获取城市，并归约为对应的城市等级</span>
+<span class="sd">    :param mobile_city:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">f_dict_city_level</span><span class="p">(</span><span class="n">mobile_city</span><span class="p">)</span></div>
+
+
+<span class="c1"># 2.依据手机号前7位，获取归属地信息</span>
+
+<div class="viewcode-block" id="get_mobile_7"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.get_mobile_7">[docs]</a><span class="k">def</span> <span class="nf">get_mobile_7</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()[:</span><span class="mi">7</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="f_mobiletype_clean"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_mobiletype_clean">[docs]</a><span class="k">def</span> <span class="nf">f_mobiletype_clean</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;移动&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>  <span class="c1">#</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;联通&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;电信&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">3</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span></div>
+
+
+<div class="viewcode-block" id="f_get_mobile_city"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_get_mobile_city">[docs]</a><span class="k">def</span> <span class="nf">f_get_mobile_city</span><span class="p">(</span><span class="n">mobile</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    单次查询 依据手机号匹配出对应的归属地城市</span>
+
+<span class="sd">    :param mobile: str</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">qy</span> <span class="o">=</span> <span class="s1">&#39;MobileNumber==&quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">get_mobile_7</span><span class="p">(</span><span class="n">mobile</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">mobile_addr</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">qy</span><span class="p">)</span><span class="o">.</span><span class="n">MobileCity</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+
+
+<div class="viewcode-block" id="f_get_mobile_prov"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_get_mobile_prov">[docs]</a><span class="k">def</span> <span class="nf">f_get_mobile_prov</span><span class="p">(</span><span class="n">mobile</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    单次查询 依据手机号查询出对应的归属地省</span>
+
+<span class="sd">    :param mobile:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">qy</span> <span class="o">=</span> <span class="s1">&#39;MobileNumber==&quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">get_mobile_7</span><span class="p">(</span><span class="n">mobile</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">mobile_addr</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">qy</span><span class="p">)</span><span class="o">.</span><span class="n">MobileProv</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+
+
+<div class="viewcode-block" id="f_get_mobile_type"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_get_mobile_type">[docs]</a><span class="k">def</span> <span class="nf">f_get_mobile_type</span><span class="p">(</span><span class="n">mobile</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    单次查询 运营商类型</span>
+
+
+<span class="sd">    :param mobile: str</span>
+<span class="sd">    :return: int 1：移动  ； 2：联通 ；  3 ：电信</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">qy</span> <span class="o">=</span> <span class="s1">&#39;MobileNumber==&quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">get_mobile_7</span><span class="p">(</span><span class="n">mobile</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">f_mobiletype_clean</span><span class="p">(</span><span class="n">mobile_addr</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">qy</span><span class="p">)</span><span class="o">.</span><span class="n">MobileType</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+
+
+<div class="viewcode-block" id="f_Get_mobile_Info"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_Get_mobile_Info">[docs]</a><span class="k">def</span> <span class="nf">f_Get_mobile_Info</span><span class="p">(</span><span class="n">mobile</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    批量获取出mobile相关的信息</span>
+
+<span class="sd">    :param mobile: 由电话号码构成的series或含有`mobile`为列名的dataframe</span>
+<span class="sd">    :return: DataFrame (orign + &#39;MobileType&#39;, &#39;MobileCity&#39;, &#39;MobileProv&#39;, &#39;mobile_city_lvl&#39;, &#39;mobile_prov_lvl&#39; )</span>
+
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; # read data and named `df`</span>
+<span class="sd">    &gt;&gt;&gt; f_Get_mobile_Info(df.head(100))</span>
+
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">mobile</span><span class="p">))</span> <span class="o">==</span> <span class="s2">&quot;&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;&quot;</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">mobile</span><span class="p">))</span> <span class="o">==</span> <span class="s2">&quot;&lt;class &#39;pandas.core.series.Series&#39;&gt;&quot;</span>
+    <span class="k">if</span> <span class="n">f1</span> <span class="ow">and</span> <span class="s1">&#39;mobile&#39;</span> <span class="ow">in</span> <span class="n">mobile</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">mobile</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;MobileNumber&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mobile</span><span class="o">.</span><span class="n">mobile</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_mobile_7</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">mobile</span><span class="p">,</span> <span class="n">mobile_addr</span><span class="p">[[</span><span class="s1">&#39;MobileNumber&#39;</span><span class="p">,</span> <span class="s1">&#39;MobileType&#39;</span><span class="p">,</span> <span class="s1">&#39;MobileCity&#39;</span><span class="p">,</span> <span class="s1">&#39;MobileProv&#39;</span><span class="p">]],</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;MobileType&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">MobileType</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_mobiletype_clean</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+            <span class="n">mobile_city_lvl</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">MobileCity</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_mobile_city_lvl</span><span class="p">),</span>
+            <span class="n">mobile_prov_lvl</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">MobileProv</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_mobile_prov_lvl</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+    <span class="k">elif</span> <span class="n">f2</span><span class="p">:</span>
+        <span class="n">mobile</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;mobile&#39;</span>
+        <span class="n">mobile</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mobile</span><span class="p">)</span>
+        <span class="n">mobile</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;MobileNumber&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mobile</span><span class="o">.</span><span class="n">mobile</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_mobile_7</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">mobile</span><span class="p">,</span> <span class="n">mobile_addr</span><span class="p">[[</span><span class="s1">&#39;MobileNumber&#39;</span><span class="p">,</span> <span class="s1">&#39;MobileType&#39;</span><span class="p">,</span> <span class="s1">&#39;MobileCity&#39;</span><span class="p">,</span> <span class="s1">&#39;MobileProv&#39;</span><span class="p">]],</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;MobileType&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">MobileType</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_mobiletype_clean</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+            <span class="n">mobile_city_lvl</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">MobileCity</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_mobile_city_lvl</span><span class="p">),</span>
+            <span class="n">mobile_prov_lvl</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">MobileProv</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_mobile_prov_lvl</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="f_Get_idno_Info"><a class="viewcode-back" href="../../CcxgetaddrTools.html#CcxgetaddrTools.getaddr.f_Get_idno_Info">[docs]</a><span class="k">def</span> <span class="nf">f_Get_idno_Info</span><span class="p">(</span><span class="n">idno</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    批量获取出身份证相关的信息</span>
+
+<span class="sd">    :param idno: str 由身份证号构成的series或含有idno列的dataframe</span>
+<span class="sd">    :return: DataFrame (origin + age + gender +  idno_prov + idno_city + idno_prov_lvl + idno_city_lvl)</span>
+
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; # read data and named `df`</span>
+<span class="sd">    &gt;&gt;&gt; dd = f_Get_idno_Info(df.head(100))</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">f1</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">idno</span><span class="p">))</span> <span class="o">==</span> <span class="s2">&quot;&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;&quot;</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">idno</span><span class="p">))</span> <span class="o">==</span> <span class="s2">&quot;&lt;class &#39;pandas.core.series.Series&#39;&gt;&quot;</span>
+    <span class="k">if</span> <span class="n">f1</span> <span class="ow">and</span> <span class="s1">&#39;idno&#39;</span> <span class="ow">in</span> <span class="n">idno</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">idno</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idno</span><span class="o">.</span><span class="n">idno</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_age</span><span class="p">)</span>
+        <span class="n">idno</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idno</span><span class="o">.</span><span class="n">idno</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_gender</span><span class="p">)</span>
+        <span class="n">idno</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;idno_prov&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idno</span><span class="o">.</span><span class="n">idno</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_idno_prov</span><span class="p">)</span>
+        <span class="n">idno</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;idno_city&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idno</span><span class="o">.</span><span class="n">idno</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_idno_city</span><span class="p">)</span>
+        <span class="n">idno</span> <span class="o">=</span> <span class="n">idno</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+            <span class="n">idno_prov_lvl</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">idno_prov</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_cid_prov_lvl</span><span class="p">),</span>
+            <span class="n">idno_city_lvl</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">idno_city</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_cid_city_lvl</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">idno</span>
+    <span class="k">elif</span> <span class="n">f2</span><span class="p">:</span>
+        <span class="n">idno</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;idno&#39;</span>
+        <span class="n">idno</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">idno</span><span class="p">)</span>
+        <span class="n">idno</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idno</span><span class="o">.</span><span class="n">idno</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_age</span><span class="p">)</span>
+        <span class="n">idno</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idno</span><span class="o">.</span><span class="n">idno</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_gender</span><span class="p">)</span>
+        <span class="n">idno</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;idno_prov&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idno</span><span class="o">.</span><span class="n">idno</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_idno_prov</span><span class="p">)</span>
+        <span class="n">idno</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;idno_city&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idno</span><span class="o">.</span><span class="n">idno</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_idno_city</span><span class="p">)</span>
+        <span class="n">idno</span> <span class="o">=</span> <span class="n">idno</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+            <span class="n">idno_prov_lvl</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">idno_prov</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_cid_prov_lvl</span><span class="p">),</span>
+            <span class="n">idno_city_lvl</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">idno_city</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_cid_city_lvl</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">idno</span></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># 测试</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">r&#39;C:\Users\Administrator\Desktop\tn_0713\base_rawdata_0717.csv&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;gbk&#39;</span><span class="p">)</span>
+    <span class="n">aa</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">idno</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_gender</span><span class="p">)</span>
+    <span class="c1"># print(aa)</span>
+
+    <span class="n">bb</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">mobile</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f_get_mobile_type</span><span class="p">)</span>
+    <span class="c1"># print(bb)</span>
+
+    <span class="n">cc</span> <span class="o">=</span> <span class="n">f_Get_mobile_Info</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+    <span class="c1"># print(cc)</span>
+
+    <span class="n">dd</span> <span class="o">=</span> <span class="n">f_Get_idno_Info</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
+
+    <span class="c1"># 2017-12-28 给陈力为pickle 0.20.3的字典</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">r&#39;C:\Users\liyin\Desktop\RTHX\Ccxgetaddr-0.1.0\dict\mobile_dict.npy&#39;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, liyingkun.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'latest',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
